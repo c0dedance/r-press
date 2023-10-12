@@ -1,0 +1,19 @@
+{
+  "name": "r-press",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc -w"
+  },
+  "bin": {
+    "r-press": "bin/r-press.js"
+  },
+  "author": "c0dedance",
+  "devDependencies": {
+    "@types/node": "^20.8.4",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "cac": "^6.7.14"
+  }
+}
