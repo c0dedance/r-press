@@ -5,23 +5,38 @@
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup",
-    "lint": "eslint --fix --ext .ts,.tsx,.js,.jsx --quiet ./"
+    "lint": "eslint --fix --ext .ts,.tsx,.js,.jsx --quiet ./",
+    "postinstall": "simple-git-hooks"
   },
   "bin": {
     "r-press": "bin/r-press.js"
   },
+  "simple-git-hooks": {
+    "pre-commit": "npx --no -- lint-staged",
+    "commit-msg": "npx --no-install commitlint --edit \"$1\""
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,tsx,ts}": [
+      "eslint --fix"
+    ]
+  },
   "author": "c0dedance",
   "devDependencies": {
+    "@commitlint/cli": "^17.7.2",
+    "@commitlint/config-conventional": "^17.7.0",
     "@types/fs-extra": "^11.0.2",
     "@types/node": "^20.8.4",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
+    "commitlint": "^17.7.2",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
+    "simple-git-hooks": "^2.9.0",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2"
   },
