@@ -6,6 +6,7 @@
     "dev": "tsup --watch",
     "build": "tsup",
     "lint": "eslint --fix --ext .ts,.tsx,.js,.jsx --quiet ./",
+    "test": "vitest run",
     "postinstall": "simple-git-hooks"
   },
   "bin": {
@@ -38,7 +39,8 @@
     "prettier": "^3.0.3",
     "simple-git-hooks": "^2.9.0",
     "tsup": "^7.2.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.1.0",

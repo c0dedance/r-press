@@ -7,5 +7,8 @@
     "jsx": "react-jsx" /* Specify what JSX code is generated. */,
     "resolveJsonModule": true,
     "esModuleInterop": true, /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
+    "types": [
+      "vitest/globals"
+    ]
   }
 }
