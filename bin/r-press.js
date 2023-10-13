@@ -1,2 +1,3 @@
 #!/usr/bin/env node
-require("../dist/node/cli.js");
+// require("../dist/cli.cjs");
+import("../dist/cli.mjs");

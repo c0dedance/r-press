@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc -w"
+    "dev": "tsup --watch",
+    "build": "tsup"
   },
   "bin": {
     "r-press": "bin/r-press.js"
@@ -12,12 +13,14 @@
   "devDependencies": {
     "@types/fs-extra": "^11.0.2",
     "@types/node": "^20.8.4",
+    "tsup": "^7.2.0",
     "typescript": "^5.2.2"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.1.0",
     "cac": "^6.7.14",
     "fs-extra": "^11.1.1",
+    "ora": "^7.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup": "^4.0.2",

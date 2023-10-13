@@ -1,16 +1,19 @@
-import * as path from 'path'
+import path from 'path'
 import { build as viteBuild } from 'vite'
-import * as fs from "fs-extra";
+import fs from "fs-extra";
+// import ora from 'ora'
 import { CLIENT_ENTRY_PATH, SERVER_ENTRY_PATH } from './constant'
 import type { InlineConfig } from 'vite'
 import type { RollupOutput } from 'rollup'
+
+// const spinner = ora()
 
 export async function build(root: string = process.cwd()) {
   // 1. bundle client 端 + server 端
   const [clientBundle, serverBundle] = await bundle(root);
   // 2. 引入 server-entry 模块
   const serverEntryPath = path.resolve(root, './.temp/ssr-entry.js')
-  const { render } = require(serverEntryPath)
+  const { render } = await import(serverEntryPath)
   // 3. 服务端渲染，产出HTML
   await renderPage(root, render, clientBundle)
 }
@@ -47,6 +50,7 @@ export async function renderPage(
 }
 
 export async function bundle(root: string) {
+  // spinner.start('Building client + server bundles...')
   console.log(`Building client + server bundles...`);
   try {
     const [clientBundle, serverBundle] = await Promise.all([

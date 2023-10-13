@@ -1,9 +1,8 @@
-import * as path from "path";
 import { cac } from "cac";
 import { createDevServer } from "./dev";
 import { build } from "./build";
 
-const { version } = require("../../package.json");
+import { version } from "../../package.json";
 
 const cli = cac("r-press").version(version).help();
 

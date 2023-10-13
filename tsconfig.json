@@ -3,7 +3,9 @@
     "outDir": "dist",
     "target": "ESNext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     "module": "commonjs" /* Specify what module code is generated. */,
-    "rootDir": "src" /* Specify the root folder within your source files. */,
+    "rootDir": "." /* Specify the root folder within your source files. */,
     "jsx": "react-jsx" /* Specify what JSX code is generated. */,
+    "resolveJsonModule": true,
+    "esModuleInterop": true, /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
   }
 }
