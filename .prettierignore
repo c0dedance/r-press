@@ -1,0 +1,9 @@
+.eslintrc
+node_modules
+package.json
+pnpm-lock.yaml
+dist
+build
+bin
+esm-cjs
+docs
