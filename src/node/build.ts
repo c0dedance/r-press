@@ -1,4 +1,5 @@
 import path from 'path'
+import { pathToFileURL } from 'url';
 import { build as viteBuild } from 'vite'
 import fs from "fs-extra";
 // import ora from 'ora'
@@ -12,7 +13,7 @@ export async function build(root: string = process.cwd()) {
   // 1. bundle client 端 + server 端
   const [clientBundle, serverBundle] = await bundle(root);
   // 2. 引入 server-entry 模块
-  const serverEntryPath = path.resolve(root, './.temp/ssr-entry.js')
+  const serverEntryPath = pathToFileURL(path.resolve(root, './.temp/ssr-entry.js')).toString()
   const { render } = await import(serverEntryPath)
   // 3. 服务端渲染，产出HTML
   await renderPage(root, render, clientBundle)
