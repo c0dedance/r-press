@@ -1,9 +1,7 @@
 import { cac } from 'cac'
 import { createDevServer } from './dev'
 import { build } from './build'
-
 import { version } from '../../package.json'
-import { resolveConfig } from './config'
 
 const cli = cac('r-press').version(version).help()
 
@@ -11,7 +9,6 @@ cli
   .command('[root]', 'start dev server')
   .alias('dev')
   .action(async (root: string) => {
-    await resolveConfig(root, 'serve', 'development')
     const server = await createDevServer(root)
     await server.listen()
     server.printUrls()
@@ -20,7 +17,7 @@ cli
 cli
   .command('build [root]', 'build for production')
   .action(async (root: string) => {
-    await resolveConfig(root, 'build', 'production')
+    // await resolveConfig(root, 'build', 'production')
     await build(root)
   })
 
