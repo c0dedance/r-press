@@ -1,0 +1,10 @@
+{
+  "name": "basic",
+  "scripts": {
+    "dev": "r-press dev docs",
+    "build": "r-press build docs"
+  },
+  "dependencies": {
+    "r-press": "link:../../.."
+  }
+}

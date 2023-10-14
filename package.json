@@ -7,7 +7,9 @@
     "build": "tsup",
     "lint": "eslint --fix --ext .ts,.tsx,.js,.jsx --quiet ./",
     "test": "vitest run",
-    "postinstall": "simple-git-hooks"
+    "test:e2e": "playwright test",
+    "prepare:e2e": "tsx scripts/prepare-e2e.ts",
+    "prepare": "simple-git-hooks"
   },
   "bin": {
     "r-press": "bin/r-press.js"
@@ -25,6 +27,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.7.2",
     "@commitlint/config-conventional": "^17.7.0",
+    "@playwright/test": "^1.26.1",
     "@types/fs-extra": "^11.0.2",
     "@types/node": "^20.8.4",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
@@ -35,10 +38,12 @@
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "execa": "5.1.1",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
     "simple-git-hooks": "^2.9.0",
     "tsup": "^7.2.0",
+    "tsx": "^3.13.0",
     "typescript": "^5.2.2",
     "vitest": "^0.34.6"
   },
