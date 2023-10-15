@@ -1,5 +1,4 @@
 import { cac } from 'cac'
-import { createDevServer } from './dev'
 import { build } from './build'
 import { version } from '../../package.json'
 
@@ -9,9 +8,19 @@ cli
   .command('[root]', 'start dev server')
   .alias('dev')
   .action(async (root: string) => {
-    const server = await createDevServer(root)
-    await server.listen()
-    server.printUrls()
+    const createServer = async () => {
+      const { createDevServer } = await import('./dev')
+      const restartServer = async () => {
+        await server.close()
+        await createServer()
+      }
+      const server = await createDevServer(root, restartServer)
+
+      await server.listen()
+      server.printUrls()
+    }
+
+    await createServer()
   })
 
 cli
