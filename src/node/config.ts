@@ -13,10 +13,15 @@ export async function resolveConfig(
   command: 'serve' | 'build',
   mode: 'development' | 'production'
 ): Promise<SiteConfig> {
-  const [configPath, userConfig] = await resolveUserConfig(root, command, mode)
+  const [configPath, userConfig, userConfigDeps] = await resolveUserConfig(
+    root,
+    command,
+    mode
+  )
   const siteConfig: SiteConfig = {
     root,
     configPath: configPath,
+    configDeps: userConfigDeps,
     siteData: resolveSiteData(userConfig as UserConfig),
   }
   console.log(siteConfig, 'siteConfig')
@@ -31,20 +36,21 @@ export async function resolveUserConfig(
   // 1. 获取配置路径 支持js 和 ts 格式
   const configPath = getUserConfigPath(root)
   // 2.解析配置文件
-  const { config: rawConfig = {} as RawUserConfig } = await loadConfigFromFile(
-    {
-      command,
-      mode,
-    },
-    configPath,
-    root
-  )
+  const { config: rawConfig = {} as RawUserConfig, dependencies = [] } =
+    await loadConfigFromFile(
+      {
+        command,
+        mode,
+      },
+      configPath,
+      root
+    )
   if (rawConfig) {
     const config =
       typeof rawConfig === 'function' ? await rawConfig() : rawConfig
-    return [configPath, config] as const
+    return [configPath, config, dependencies] as const
   }
-  return [configPath, {} as UserConfig] as const
+  return [configPath, {} as UserConfig, dependencies] as const
 }
 
 export function resolveSiteData(userConfig: UserConfig): UserConfig {

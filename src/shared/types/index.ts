@@ -4,6 +4,7 @@ import type { UserConfig as ViteUserConfig } from 'vite'
 export interface SiteConfig {
   root: string
   configPath: string
+  configDeps: string[]
   siteData: UserConfig
 }
 

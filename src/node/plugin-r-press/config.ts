@@ -23,7 +23,7 @@ export function pluginConfig(
       }
     },
     async handleHotUpdate(ctx) {
-      const customWatchedFiles = [config.configPath]
+      const customWatchedFiles = [config.configPath, ...config.configDeps]
       const include = (id: string) =>
         customWatchedFiles.some((file) => id.includes(file))
 
