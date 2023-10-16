@@ -1,6 +1,7 @@
 import { cac } from 'cac'
 import { build } from './build'
 import { version } from '../../package.json'
+import { resolveConfig } from './config'
 
 const cli = cac('r-press').version(version).help()
 
@@ -26,8 +27,8 @@ cli
 cli
   .command('build [root]', 'build for production')
   .action(async (root: string) => {
-    // await resolveConfig(root, 'build', 'production')
-    await build(root)
+    const config = await resolveConfig(root, 'build', 'production')
+    await build(root, config)
   })
 
 cli.parse()

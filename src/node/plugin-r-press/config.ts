@@ -6,7 +6,7 @@ const SITE_DATA_ID = 'rpress:site-data'
 
 export function pluginConfig(
   config: SiteConfig,
-  restartServer: () => Promise<void>
+  restartServer?: () => Promise<void>
 ): Plugin {
   return {
     name: 'r-press:site-data',
