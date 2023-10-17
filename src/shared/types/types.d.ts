@@ -3,3 +3,8 @@ declare module 'rpress:site-data' {
   const siteData: UserConfig
   export default siteData
 }
+declare module 'rpress:routes' {
+  import type { RouteObject } from 'react-router-dom'
+  const routes: RouteObject[]
+  export { routes }
+}

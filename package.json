@@ -6,7 +6,7 @@
     "dev": "tsup --watch",
     "build": "tsup",
     "lint": "eslint --fix --ext .ts,.tsx,.js,.jsx --quiet ./",
-    "test": "vitest run",
+    "test:unit": "vitest run",
     "test:e2e": "playwright test",
     "prepare:e2e": "tsx scripts/prepare-e2e.ts",
     "prepare": "simple-git-hooks"
@@ -50,6 +50,7 @@
   "dependencies": {
     "@vitejs/plugin-react": "^4.1.0",
     "cac": "^6.7.14",
+    "fast-glob": "^3.3.1",
     "fs-extra": "^11.1.1",
     "ora": "^7.0.1",
     "react": "^18.2.0",

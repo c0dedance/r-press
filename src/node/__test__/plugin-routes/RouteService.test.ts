@@ -1,0 +1,32 @@
+import path from 'path'
+import { RouteService } from '../../../node/plugin-routes/RouteService'
+
+describe('RouteService', async () => {
+  const testDir = path.resolve(__dirname, 'fixtures')
+  const routeService = new RouteService(testDir)
+  await routeService.init()
+
+  test('conventional route by file structure', async () => {
+    // 替换为通用的路径前缀
+    const routeMeta = routeService.getRouteMeta().map((item) => ({
+      ...item,
+      absolutePath: item.absolutePath.replace(testDir, 'TEST_DIR'),
+    }))
+    expect(routeMeta).toMatchInlineSnapshot(`
+      [
+        {
+          "absolutePath": "TEST_DIR/b.tsx",
+          "routePath": "/b",
+        },
+        {
+          "absolutePath": "TEST_DIR/guide/a.tsx",
+          "routePath": "/guide/a",
+        },
+        {
+          "absolutePath": "TEST_DIR/guide/index.tsx",
+          "routePath": "/guide",
+        },
+      ]
+    `)
+  })
+})

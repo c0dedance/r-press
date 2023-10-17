@@ -4,6 +4,7 @@ import { pluginIndexHtml } from './plugin-r-press/indexHtml'
 import { ROOT } from './constant'
 import { pluginConfig } from './plugin-r-press/config'
 import { resolveConfig } from './config'
+import { pluginRoutes } from './plugin-routes'
 
 export async function createDevServer(
   root: string = process.cwd(),
@@ -17,6 +18,9 @@ export async function createDevServer(
       pluginIndexHtml(),
       pluginReact(),
       pluginConfig(config, restartServer),
+      pluginRoutes({
+        root: config.root,
+      }),
     ],
     server: {
       fs: {
