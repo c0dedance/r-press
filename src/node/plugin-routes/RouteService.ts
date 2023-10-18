@@ -56,7 +56,7 @@ export const routes = [
     return this.#routeMeta
   }
   normalizeRoutePath(path: string) {
-    const cleanPath = path.replace(/\..*$/g, '').replace(/\/index$/g, '')
+    const cleanPath = path.replace(/\..*$/g, '').replace(/index$/g, '')
     return cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`
   }
 }

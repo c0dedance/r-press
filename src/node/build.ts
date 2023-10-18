@@ -2,13 +2,12 @@ import path from 'path'
 import { pathToFileURL } from 'url'
 import { build as viteBuild } from 'vite'
 import fs from 'fs-extra'
-import pluginReact from '@vitejs/plugin-react'
-import { pluginConfig } from './plugin-r-press/config'
 // import ora from 'ora'
 import { CLIENT_ENTRY_PATH, SERVER_ENTRY_PATH } from './constant'
 import type { InlineConfig } from 'vite'
 import type { RollupOutput } from 'rollup'
 import type { SiteConfig } from 'shared/types'
+import { createVitePlugins } from './vitePlugins'
 
 // const spinner = ora()
 
@@ -85,7 +84,7 @@ function resolveBuildConfig({
   return {
     mode: 'production',
     root,
-    plugins: [pluginReact(), pluginConfig(config)],
+    plugins: createVitePlugins(config),
     ssr: {
       // 注意加上这个配置，防止 cjs 产物中 require ESM 的产物，因为 react-router-dom 的产物为 ESM 格式
       noExternal: ['react-router-dom'], // 加入编译
