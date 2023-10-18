@@ -29,4 +29,19 @@ describe('RouteService', async () => {
       ]
     `)
   })
+  test('generate routes code', async () => {
+    const code = routeService.generateRoutes().replaceAll(testDir, 'TEST_DIR')
+    expect(code).toMatchInlineSnapshot(`
+      "import React from 'react'
+      import Route0 from 'TEST_DIR/b.tsx';
+      import Route1 from 'TEST_DIR/guide/a.tsx';
+      import Route2 from 'TEST_DIR/guide/index.tsx';
+      export const routes = [
+        { \\"path\\": '/b', \\"element\\": React.createElement(Route0)},
+      { \\"path\\": '/guide/a', \\"element\\": React.createElement(Route1)},
+      { \\"path\\": '/guide', \\"element\\": React.createElement(Route2)},
+        ]
+      "
+    `)
+  })
 })

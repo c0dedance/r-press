@@ -24,9 +24,8 @@ export function pluginRoutes(options: PluginOptions): Plugin {
     },
     load(id: string) {
       if (id === '\0' + CONVENTIONAL_ROUTE_ID) {
-        const a = routeService.generateRoutes()
-        console.log('generateRoutes', a)
-        return a
+        const code = routeService.generateRoutes()
+        return code
       }
     },
   }

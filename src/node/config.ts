@@ -24,7 +24,6 @@ export async function resolveConfig(
     configDeps: userConfigDeps,
     siteData: resolveSiteData(userConfig as UserConfig),
   }
-  console.log(siteConfig, 'siteConfig')
   return siteConfig
 }
 
