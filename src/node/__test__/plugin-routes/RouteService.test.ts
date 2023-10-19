@@ -24,7 +24,7 @@ describe('RouteService', async () => {
         },
         {
           "absolutePath": "TEST_DIR/guide/index.tsx",
-          "routePath": "/guide",
+          "routePath": "/guide/",
         },
       ]
     `)
@@ -39,7 +39,7 @@ describe('RouteService', async () => {
       export const routes = [
         { \\"path\\": '/b', \\"element\\": React.createElement(Route0)},
       { \\"path\\": '/guide/a', \\"element\\": React.createElement(Route1)},
-      { \\"path\\": '/guide', \\"element\\": React.createElement(Route2)},
+      { \\"path\\": '/guide/', \\"element\\": React.createElement(Route2)},
         ]
       "
     `)
