@@ -11,7 +11,7 @@ export async function createDevServer(
 
   return createViteDevServer({
     root: ROOT,
-    plugins: createVitePlugins(config, restartServer),
+    plugins: await createVitePlugins(config, restartServer),
     server: {
       fs: {
         // 允许为项目根目录的上一级提供服务

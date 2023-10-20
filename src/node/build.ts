@@ -72,7 +72,7 @@ export async function bundle(root: string, config: SiteConfig) {
   }
 }
 
-function resolveBuildConfig({
+async function resolveBuildConfig({
   isSSR,
   root,
   config,
@@ -80,11 +80,11 @@ function resolveBuildConfig({
   isSSR: boolean
   root: string
   config: SiteConfig
-}): InlineConfig {
+}): Promise<InlineConfig> {
   return {
     mode: 'production',
     root,
-    plugins: createVitePlugins(config),
+    plugins: await createVitePlugins(config),
     ssr: {
       // 注意加上这个配置，防止 cjs 产物中 require ESM 的产物，因为 react-router-dom 的产物为 ESM 格式
       noExternal: ['react-router-dom'], // 加入编译
@@ -103,9 +103,9 @@ function resolveBuildConfig({
 }
 
 async function buildClient(root: string, config: SiteConfig) {
-  return viteBuild(resolveBuildConfig({ isSSR: false, root, config }))
+  return viteBuild(await resolveBuildConfig({ isSSR: false, root, config }))
 }
 
 async function buildServer(root: string, config: SiteConfig) {
-  return viteBuild(resolveBuildConfig({ isSSR: true, root, config }))
+  return viteBuild(await resolveBuildConfig({ isSSR: true, root, config }))
 }

@@ -16,7 +16,7 @@ export const rehypePluginPreWrapper: Plugin<[], Root> = () => {
         const className = codeNode.properties?.className?.[0]
         const lang = className?.replace(/^language-/, '') || ''
         // remove className
-        codeNode.properties!.className = ''
+        // codeNode.properties!.className = ''
 
         const spanNode: Element = {
           type: 'element',
