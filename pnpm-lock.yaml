@@ -9,8 +9,8 @@ dependencies:
     specifier: 2.1.3
     version: 2.1.3(rollup@4.0.2)
   '@vitejs/plugin-react':
-    specifier: ^4.1.0
-    version: 4.1.0(vite@4.4.11)
+    specifier: ^2.2.0
+    version: 2.2.0(vite@4.4.11)
   acorn:
     specifier: ^8.10.0
     version: 8.10.0
@@ -221,6 +221,13 @@ packages:
       jsesc: 2.5.2
     dev: false
 
+  /@babel/helper-annotate-as-pure@7.22.5:
+    resolution: {integrity: sha512-LvBTxu8bQSQkcyKOU+a1btnNFQ1dMAd0R6PyW3arXes06F6QLWLIrd681bxRPIXlrMGR3XYnW9JyML7dP3qgxg==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      '@babel/types': 7.23.0
+    dev: false
+
   /@babel/helper-compilation-targets@7.22.15:
     resolution: {integrity: sha512-y6EEzULok0Qvz8yyLkCvVX+02ic+By2UdOhylwUOvOn9dvYc9mKICJuuU1n1XBI02YWsNsnrY1kc6DVbjcXbtw==}
     engines: {node: '>=6.9.0'}
@@ -333,6 +340,26 @@ packages:
       '@babel/types': 7.23.0
     dev: false
 
+  /@babel/plugin-syntax-jsx@7.22.5(@babel/core@7.23.2):
+    resolution: {integrity: sha512-gvyP4hZrgrs/wWMaocvxZ44Hw0b3W8Pe+cMxc8V1ULQ07oh8VNbIRaoD1LRZVTvD+0nieDKjfgKg89sD7rrKrg==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.23.2
+      '@babel/helper-plugin-utils': 7.22.5
+    dev: false
+
+  /@babel/plugin-transform-react-jsx-development@7.22.5(@babel/core@7.23.2):
+    resolution: {integrity: sha512-bDhuzwWMuInwCYeDeMzyi7TaBgRQei6DqxhbyniL7/VG4RSS7HtSL2QbY4eESy1KJqlWt8g3xeEBGPuo+XqC8A==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.23.2
+      '@babel/plugin-transform-react-jsx': 7.22.15(@babel/core@7.23.2)
+    dev: false
+
   /@babel/plugin-transform-react-jsx-self@7.22.5(@babel/core@7.23.2):
     resolution: {integrity: sha512-nTh2ogNUtxbiSbxaT4Ds6aXnXEipHweN9YRgOX/oNXdf0cCrGn/+2LozFa3lnPV5D90MkjhgckCPBrsoSc1a7g==}
     engines: {node: '>=6.9.0'}
@@ -351,6 +378,20 @@ packages:
     dependencies:
       '@babel/core': 7.23.2
       '@babel/helper-plugin-utils': 7.22.5
+    dev: false
+
+  /@babel/plugin-transform-react-jsx@7.22.15(@babel/core@7.23.2):
+    resolution: {integrity: sha512-oKckg2eZFa8771O/5vi7XeTvmM6+O9cxZu+kanTU7tD4sin5nO/G8jGJhq8Hvt2Z0kUoEDRayuZLaUlYl8QuGA==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.23.2
+      '@babel/helper-annotate-as-pure': 7.22.5
+      '@babel/helper-module-imports': 7.22.15
+      '@babel/helper-plugin-utils': 7.22.5
+      '@babel/plugin-syntax-jsx': 7.22.5(@babel/core@7.23.2)
+      '@babel/types': 7.23.0
     dev: false
 
   /@babel/template@7.22.15:
@@ -1052,35 +1093,6 @@ packages:
       '@types/estree': 1.0.3
     dev: false
 
-  /@types/babel__core@7.20.2:
-    resolution: {integrity: sha512-pNpr1T1xLUc2l3xJKuPtsEky3ybxN3m4fJkknfIpTCTfIZCDW57oAg+EfCgIIp2rvCe0Wn++/FfodDS4YXxBwA==}
-    dependencies:
-      '@babel/parser': 7.23.0
-      '@babel/types': 7.23.0
-      '@types/babel__generator': 7.6.5
-      '@types/babel__template': 7.4.2
-      '@types/babel__traverse': 7.20.2
-    dev: false
-
-  /@types/babel__generator@7.6.5:
-    resolution: {integrity: sha512-h9yIuWbJKdOPLJTbmSpPzkF67e659PbQDba7ifWm5BJ8xTv+sDmS7rFmywkWOvXedGTivCdeGSIIX8WLcRTz8w==}
-    dependencies:
-      '@babel/types': 7.23.0
-    dev: false
-
-  /@types/babel__template@7.4.2:
-    resolution: {integrity: sha512-/AVzPICMhMOMYoSx9MoKpGDKdBRsIXMNByh1PXSZoa+v6ZoLa8xxtsT/uLQ/NJm0XVAWl/BvId4MlDeXJaeIZQ==}
-    dependencies:
-      '@babel/parser': 7.23.0
-      '@babel/types': 7.23.0
-    dev: false
-
-  /@types/babel__traverse@7.20.2:
-    resolution: {integrity: sha512-ojlGK1Hsfce93J0+kn3H5R73elidKUaZonirN33GSmgTUMpzI/MIFfSpF3haANe3G1bEBS9/9/QEqwTzwqFsKw==}
-    dependencies:
-      '@babel/types': 7.23.0
-    dev: false
-
   /@types/chai-subset@1.3.3:
     resolution: {integrity: sha512-frBecisrNGz+F4T6bcc+NLeolfiojh5FxW2klu669+8BARtyQv2C/GkNW6FUodVe4BroGMP/wER/YDGc7rEllw==}
     dependencies:
@@ -1321,16 +1333,18 @@ packages:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: false
 
-  /@vitejs/plugin-react@4.1.0(vite@4.4.11):
-    resolution: {integrity: sha512-rM0SqazU9iqPUraQ2JlIvReeaxOoRj6n+PzB1C0cBzIbd8qP336nC39/R9yPi3wVcah7E7j/kdU1uCUqMEU4OQ==}
+  /@vitejs/plugin-react@2.2.0(vite@4.4.11):
+    resolution: {integrity: sha512-FFpefhvExd1toVRlokZgxgy2JtnBOdp4ZDsq7ldCWaqGSGn9UhWMAVm/1lxPL14JfNS5yGz+s9yFrQY6shoStA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
-      vite: ^4.2.0
+      vite: ^3.0.0
     dependencies:
       '@babel/core': 7.23.2
+      '@babel/plugin-transform-react-jsx': 7.22.15(@babel/core@7.23.2)
+      '@babel/plugin-transform-react-jsx-development': 7.22.5(@babel/core@7.23.2)
       '@babel/plugin-transform-react-jsx-self': 7.22.5(@babel/core@7.23.2)
       '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.23.2)
-      '@types/babel__core': 7.20.2
+      magic-string: 0.26.7
       react-refresh: 0.14.0
       vite: 4.4.11(@types/node@20.8.4)
     transitivePeerDependencies:
@@ -3576,6 +3590,13 @@ packages:
       yallist: 4.0.0
     dev: true
 
+  /magic-string@0.26.7:
+    resolution: {integrity: sha512-hX9XH3ziStPoPhJxLq1syWuZMxbDvGNbVchfrdCtanC7D13888bMFow61x8axrx+GfHLtVeAx2kxL7tTGRl+Ow==}
+    engines: {node: '>=12'}
+    dependencies:
+      sourcemap-codec: 1.4.8
+    dev: false
+
   /magic-string@0.30.5:
     resolution: {integrity: sha512-7xlpfBaQaP/T6Vh8MO/EqXSW5En6INHEvEXQiuff7Gku0PWjU3uf6w/j9o7O+SpB5fOAkrI5HeoNgwjEO0pFsA==}
     engines: {node: '>=12'}
@@ -5393,6 +5414,11 @@ packages:
     dependencies:
       whatwg-url: 7.1.0
     dev: true
+
+  /sourcemap-codec@1.4.8:
+    resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
+    deprecated: Please use @jridgewell/sourcemap-codec instead
+    dev: false
 
   /space-separated-tokens@2.0.2:
     resolution: {integrity: sha512-PEGlAwrG8yXGXRjW32fGbg66JAlOAwbObuqVoJpv/mRgoWDQfgH1wDPvtzWyUSNAXBGSk8h755YDbbcEy3SH2Q==}
