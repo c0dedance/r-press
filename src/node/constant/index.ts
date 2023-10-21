@@ -8,7 +8,10 @@ export const CLIENT_ENTRY_PATH = path.resolve(
   ROOT,
   './src/runtime/client-entry.tsx'
 )
+
 export const SERVER_ENTRY_PATH = path.resolve(
   ROOT,
   './src/runtime/ssr-entry.tsx'
 )
+
+export const MD_REGEX = /\.mdx?$/
