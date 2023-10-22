@@ -37,9 +37,9 @@ describe('RouteService', async () => {
       import Route1 from 'TEST_DIR/guide/a.tsx';
       import Route2 from 'TEST_DIR/guide/index.tsx';
       export const routes = [
-        { \\"path\\": '/b', \\"element\\": React.createElement(Route0)},
-      { \\"path\\": '/guide/a', \\"element\\": React.createElement(Route1)},
-      { \\"path\\": '/guide/', \\"element\\": React.createElement(Route2)},
+        { \\"path\\": '/b', \\"element\\": React.createElement(Route0), \\"preload\\": () => import('TEST_DIR/b.tsx')},
+      { \\"path\\": '/guide/a', \\"element\\": React.createElement(Route1), \\"preload\\": () => import('TEST_DIR/guide/a.tsx')},
+      { \\"path\\": '/guide/', \\"element\\": React.createElement(Route2), \\"preload\\": () => import('TEST_DIR/guide/index.tsx')},
         ]
       "
     `)

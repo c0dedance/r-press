@@ -46,7 +46,7 @@ export const routes = [
   ${this.#routeMeta
     .map(
       (item, index) =>
-        `{ "path": '${item.routePath}', "element": React.createElement(Route${index})},`
+        `{ "path": '${item.routePath}', "element": React.createElement(Route${index}), "preload": () => import('${item.absolutePath}')},`
     )
     .join('\n')}
   ]

@@ -1,4 +1,11 @@
 import type { UserConfig as ViteUserConfig } from 'vite'
+import type { ComponentType } from 'react'
+
+export interface PageModule {
+  default: ComponentType
+  frontmatter?: FrontMatter
+  [key: string]: unknown
+}
 
 // 用户配置的超集
 export interface SiteConfig {
@@ -40,4 +47,28 @@ export interface SidebarGroup {
 type SidebarItem = {
   text: string
   link: string
+}
+/* page */
+export type PageType = 'home' | 'doc' | 'custom' | '404'
+
+export interface Header {
+  id: string
+  text: string
+  depth: number
+}
+// 页面元信息
+export interface FrontMatter {
+  title?: string
+  description?: string
+  pageType?: PageType
+  sidebar?: boolean
+  outline?: boolean
+}
+
+export interface PageData {
+  siteData: UserConfig
+  pagePath: string
+  frontmatter: FrontMatter
+  pageType: PageType
+  toc?: Header[]
 }
