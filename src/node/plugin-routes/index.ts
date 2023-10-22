@@ -1,8 +1,15 @@
+import React from 'react'
 import { Plugin } from 'vite'
 import { RouteService } from './RouteService'
 
 interface PluginOptions {
   root: string
+}
+
+export interface Route {
+  path: string
+  element: React.ReactElement
+  filePath: string
 }
 
 const CONVENTIONAL_ROUTE_ID = 'rpress:routes'

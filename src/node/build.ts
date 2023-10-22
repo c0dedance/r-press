@@ -4,10 +4,11 @@ import { build as viteBuild } from 'vite'
 import fs from 'fs-extra'
 // import ora from 'ora'
 import { CLIENT_ENTRY_PATH, SERVER_ENTRY_PATH } from './constant'
+import { createVitePlugins } from './vitePlugins'
 import type { InlineConfig } from 'vite'
 import type { RollupOutput } from 'rollup'
 import type { SiteConfig } from 'shared/types'
-import { createVitePlugins } from './vitePlugins'
+import type { Route } from './plugin-routes'
 
 // const spinner = ora()
 
@@ -18,40 +19,59 @@ export async function build(root: string = process.cwd(), config: SiteConfig) {
   const serverEntryPath = pathToFileURL(
     path.resolve(root, './.temp/ssr-entry.cjs') // TODO: 统一化打包后缀
   ).toString()
-  const { render } = await import(serverEntryPath)
+  const { render, routes } = await import(serverEntryPath)
   // 3. 服务端渲染，产出HTML
-  await renderPage(root, render, clientBundle)
+  await renderPage({ root, render, clientBundle, routes })
 }
-export async function renderPage(
-  root: string,
-  render: () => string,
+export async function renderPage({
+  root,
+  render,
+  clientBundle,
+  routes,
+}: {
+  root: string
+  render: (pagePath: string) => string
   clientBundle: RollupOutput
-) {
-  const appHtml = render()
+  routes: Route[]
+}) {
   const clientChunk = clientBundle.output.find(
     (chunk) => chunk.type === 'chunk' && chunk.isEntry
   )
-
+  const renderIndexHTML = (appHtml: string) =>
+    `\
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>title</title>
+      <meta name="description" content="xxx">
+    </head>
+    <body>
+      <div id="root">${appHtml}</div>
+      <script type="module" src="/${clientChunk?.fileName}"></script>
+    </body>
+  </html>`.trim()
   console.log(`Rendering page in server side...`)
+  await Promise.all(
+    routes.map(async (r) => {
+      // 渲染路由对应的页面
+      const appHtml = render(r.path)
+      // 组件HTML嵌入到模板中
+      const html = renderIndexHTML(appHtml)
+      // htlm文件名处理
+      const outputFilePath = r.path.endsWith('/')
+        ? `${r.path}index.html`
+        : `${r.path}.html`
 
-  const html = `\
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>title</title>
-    <meta name="description" content="xxx">
-  </head>
-  <body>
-    <div id="root">${appHtml}</div>
-    <script type="module" src="/${clientChunk?.fileName}"></script>
-  </body>
-</html>`.trim()
-  // ensure build dir
-  await fs.ensureDir(path.resolve(root, 'build'))
-  // write html file
-  await fs.writeFile(path.resolve(root, './build/index.html'), html)
+      const outputPath = path.join(root, 'build', outputFilePath)
+      // ensure build dir
+      await fs.ensureDir(path.dirname(outputPath))
+      // write html file
+      await fs.writeFile(outputPath, html)
+    })
+  )
+
   // remove .temp
   await fs.remove(path.resolve(root, './.temp'))
 }
@@ -92,6 +112,7 @@ async function resolveBuildConfig({
     build: {
       ssr: isSSR,
       outDir: isSSR ? '.temp' : 'build',
+      // outDir: isServer ? path.join(root, '.temp') : path.join(root, 'build'),
       rollupOptions: {
         input: isSSR ? SERVER_ENTRY_PATH : CLIENT_ENTRY_PATH,
         output: {

@@ -1,3 +1,4 @@
+import path from 'path'
 import { cac } from 'cac'
 import { build } from './build'
 import { version } from '../../package.json'
@@ -27,6 +28,7 @@ cli
 cli
   .command('build [root]', 'build for production')
   .action(async (root: string) => {
+    root = path.resolve(root)
     const config = await resolveConfig(root, 'build', 'production')
     await build(root, config)
   })
