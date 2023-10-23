@@ -1,4 +1,5 @@
 import { usePageData } from '../../../'
+import { SwitchAppearance } from '../SwitchAppearance'
 import styles from './index.module.scss'
 import type { NavItemWithLink } from 'shared/types'
 
@@ -42,8 +43,15 @@ export function Nav() {
             ))}
           </div>
           {/* 白天/夜间模式切换 */}
+          <div before="menu-item-before" flex="~">
+            <SwitchAppearance />
+          </div>
           {/* 相关链接 */}
-          <div className={styles.socialLinkIcon} ml="2">
+          <div
+            className={styles.socialLinkIcon}
+            ml="2"
+            before="menu-item-before"
+          >
             <a href="/">
               <div className="i-carbon-logo-github w-5 h-5 fill-current"></div>
             </a>
