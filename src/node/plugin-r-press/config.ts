@@ -1,6 +1,7 @@
-import { relative } from 'path'
-import { SiteConfig } from 'shared/types'
-import { Plugin } from 'vite'
+import { relative, join } from 'path'
+import { ROOT } from 'node/constant'
+import type { SiteConfig } from 'shared/types'
+import type { Plugin } from 'vite'
 
 const SITE_DATA_ID = 'rpress:site-data'
 
@@ -10,6 +11,21 @@ export function pluginConfig(
 ): Plugin {
   return {
     name: 'r-press:site-data',
+    config() {
+      return {
+        root: ROOT,
+        resolve: {
+          alias: {
+            '@runtime': join(ROOT, 'src', 'runtime', 'index.ts'),
+          },
+        },
+        css: {
+          modules: {
+            localsConvention: 'camelCaseOnly',
+          },
+        },
+      }
+    },
     resolveId(id) {
       if (id === SITE_DATA_ID) {
         return '\0' + SITE_DATA_ID

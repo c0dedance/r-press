@@ -29,7 +29,7 @@ export interface ThemeConfig {
   footer?: Footer
 }
 
-type NavItemWithLink = {
+export type NavItemWithLink = {
   text: string
   link: string
 }
@@ -44,7 +44,8 @@ export interface SidebarGroup {
   text: string
   items: SidebarItem[]
 }
-type SidebarItem = {
+
+export type SidebarItem = {
   text: string
   link: string
 }

@@ -27,6 +27,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.7.2",
     "@commitlint/config-conventional": "^17.7.0",
+    "@iconify-json/carbon": "^1.1.21",
     "@playwright/test": "^1.26.1",
     "@types/fs-extra": "^11.0.2",
     "@types/hast": "^2.3.4",
@@ -43,6 +44,7 @@
     "execa": "5.1.1",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
+    "sass": "^1.69.4",
     "simple-git-hooks": "^2.9.0",
     "tsup": "^7.2.0",
     "tsx": "^3.13.0",
