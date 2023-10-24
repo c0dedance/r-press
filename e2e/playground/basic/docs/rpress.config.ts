@@ -17,8 +17,12 @@ export default defineConfig({
               link: '/guide/start'
             },
             {
-              text: '配置站点',
+              text: '用法',
               link: '/guide/usage'
+            },
+            {
+              text: '配置站点',
+              link: '/guide/configure-site'
             }
           ]
         }

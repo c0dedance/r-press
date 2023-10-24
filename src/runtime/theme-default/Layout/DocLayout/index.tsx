@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom'
 import { Content, usePageData } from '../../../'
 import { Sidebar } from '../../components/Sidebar/'
+import { DocFooter } from '../../components/DocFooter'
 import styles from './index.module.scss'
 
 export function DocLayout() {
@@ -22,6 +23,7 @@ export function DocLayout() {
           <div className="island-doc">
             <Content />
           </div>
+          <DocFooter />
         </div>
       </div>
     </div>
