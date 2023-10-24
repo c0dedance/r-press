@@ -4,6 +4,7 @@ import type { ComponentType } from 'react'
 export interface PageModule {
   default: ComponentType
   frontmatter?: FrontMatter
+  toc?: Header[]
   [key: string]: unknown
 }
 
