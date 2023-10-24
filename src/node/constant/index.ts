@@ -9,6 +9,8 @@ export const CLIENT_ENTRY_PATH = path.resolve(
   './src/runtime/client-entry.tsx'
 )
 
+export const PUBLIC_DIR = 'public'
+
 export const SERVER_ENTRY_PATH = path.resolve(
   ROOT,
   './src/runtime/ssr-entry.tsx'
