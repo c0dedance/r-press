@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom'
-import { usePageData } from '../../../'
+import { Content, usePageData } from '../../../'
 import { Sidebar } from '../../components/Sidebar/'
+import styles from './index.module.scss'
 
 export function DocLayout() {
   const { siteData } = usePageData()
@@ -16,6 +17,13 @@ export function DocLayout() {
   return (
     <div>
       <Sidebar sidebarData={matchedSidebar} pathname={pathname} />
+      <div className={styles.content}>
+        <div>
+          <div className="island-doc">
+            <Content />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

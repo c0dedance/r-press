@@ -10,14 +10,14 @@ export default defineConfig({
     sidebar: {
       '/guide/': [
         {
-          text: '教程',
+          text: '介绍',
           items: [
             {
-              text: '快速上手',
+              text: '快速开始',
               link: '/guide/start'
             },
             {
-              text: '如何使用',
+              text: '配置站点',
               link: '/guide/usage'
             }
           ]
