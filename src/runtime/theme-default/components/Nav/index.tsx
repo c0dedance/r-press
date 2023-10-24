@@ -17,14 +17,13 @@ export function Nav() {
   const { siteData } = usePageData()
   const nav = siteData.themeConfig.nav || []
   return (
-    // {/* 视频中包含 relative="~"，属于无效代码，需要去掉 */}
-    <header fixed="~" pos="t-0 l-0" w="full">
+    <header fixed="~" pos="t-0 l-0" w="full" z="10">
       <div
         flex="~"
         items="center"
         justify="between"
         // {/* divider-bottom 为自定义规则*/}
-        className="px-8 h-14 divider-bottom"
+        className={`h-14 divider-bottom ${styles.nav}`}
       >
         <div>
           <a
