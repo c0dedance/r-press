@@ -1,4 +1,5 @@
-import { useRef } from 'react'
+import { useEffect } from 'react'
+import { bindingAsideScroll, scrollToTarget } from '../../utils/asideScroll'
 import type { Header } from 'shared/types'
 
 interface AsideProps {
@@ -9,8 +10,6 @@ export function Aside(props: AsideProps) {
   const { headers = [] } = props
   // 是否展示大纲栏
   const hasOutline = headers.length > 0
-  // 当前标题会进行高亮处理，会在这个标题前面加一个 marker 元素
-  const markerRef = useRef<HTMLDivElement>(null)
 
   const renderHeader = (header: Header) => {
     return (
@@ -22,12 +21,23 @@ export function Aside(props: AsideProps) {
           style={{
             paddingLeft: (header.depth - 2) * 12,
           }}
+          onClick={(e) => {
+            e.preventDefault()
+            const target = document.getElementById(header.id) // headEl 而不是大纲元素的El
+            target && scrollToTarget(target, false)
+          }}
         >
           {header.text}
         </a>
       </li>
     )
   }
+
+  useEffect(() => {
+    const { unbinding, setActiveLink } = bindingAsideScroll()
+    setActiveLink()
+    return unbinding
+  }, [])
 
   return (
     <div
@@ -43,7 +53,6 @@ export function Aside(props: AsideProps) {
             className="relative divider-left pl-4 text-13px font-medium"
           >
             <div
-              ref={markerRef}
               id="aside-marker"
               className="absolute top-33px opacity-0 w-1px h-18px bg-brand"
               style={{
