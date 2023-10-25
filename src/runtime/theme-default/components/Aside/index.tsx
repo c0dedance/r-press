@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { bindingAsideScroll, scrollToTarget } from '../../utils/asideScroll'
+import { useHeaders } from '../../utils/useHeaders'
 import type { Header } from 'shared/types'
 
 interface AsideProps {
@@ -7,8 +8,9 @@ interface AsideProps {
 }
 
 export function Aside(props: AsideProps) {
-  const { headers = [] } = props
+  const { headers: rawHeaders = [] } = props
   // 是否展示大纲栏
+  const { headers } = useHeaders(rawHeaders)
   const hasOutline = headers.length > 0
 
   const renderHeader = (header: Header) => {

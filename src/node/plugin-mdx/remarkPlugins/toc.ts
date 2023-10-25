@@ -5,8 +5,6 @@ import { parse } from 'acorn'
 import type { Plugin } from 'unified'
 import type { MdxjsEsm, Program } from 'mdast-util-mdxjs-esm'
 
-const slugger = new Slugger()
-
 interface TocItem {
   id: string
   text: string
@@ -21,6 +19,8 @@ export const remarkPluginToc: Plugin<[], Root> = () => {
   return (tree) => {
     // 初始化 toc 数组
     const toc: TocItem[] = []
+    // 同一个slugger实例具有记忆，重复处理的标题后续的会带上后缀，每次编译时都重新进行实例的初始化
+    const slugger = new Slugger()
     // 遍历 tree
     visit(tree, 'heading', (node) => {
       // debugger
