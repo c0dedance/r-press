@@ -1,4 +1,4 @@
-import { defineConfig } from 'r-press/dist'
+import { defineConfig } from '../dist'
 
 export default defineConfig({
   title: 'RPress',

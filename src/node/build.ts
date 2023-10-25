@@ -17,7 +17,7 @@ export async function build(root: string = process.cwd(), config: SiteConfig) {
   const [clientBundle] = await bundle(root, config)
   // 2. 引入 server-entry 模块
   const serverEntryPath = pathToFileURL(
-    path.resolve(root, './.temp/ssr-entry.cjs') // TODO: 统一化打包后缀
+    path.resolve(root, './.temp/ssr-entry.js') // TODO: 统一化打包后缀
   ).toString()
   const { render, routes } = await import(serverEntryPath)
   // 3. 服务端渲染，产出HTML
