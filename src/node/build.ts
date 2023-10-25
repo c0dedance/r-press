@@ -107,12 +107,11 @@ async function resolveBuildConfig({
     plugins: await createVitePlugins(config),
     ssr: {
       // 注意加上这个配置，防止 cjs 产物中 require ESM 的产物，因为 react-router-dom 的产物为 ESM 格式
-      noExternal: ['react-router-dom'], // 加入编译
+      noExternal: ['react-router-dom', 'lodash-es'], // 加入编译
     },
     build: {
       ssr: isSSR,
-      outDir: isSSR ? '.temp' : 'build',
-      // outDir: isServer ? path.join(root, '.temp') : path.join(root, 'build'),
+      outDir: isSSR ? path.join(root, '.temp') : path.join(root, 'build'),
       rollupOptions: {
         input: isSSR ? SERVER_ENTRY_PATH : CLIENT_ENTRY_PATH,
         output: {
