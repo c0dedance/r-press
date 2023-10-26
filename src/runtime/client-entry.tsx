@@ -10,7 +10,6 @@ async function renderInBrowser() {
   }
   // 初始化 PageData
   const pageData = await initPageData(location.pathname)
-  console.log(pageData, 'pageData')
 
   createRoot(containerEl).render(
     <DataContext.Provider value={pageData}>

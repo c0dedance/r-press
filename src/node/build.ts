@@ -56,7 +56,7 @@ export async function renderPage({
   await Promise.all(
     routes.map(async (r) => {
       // 渲染路由对应的页面
-      const appHtml = render(r.path)
+      const appHtml = await render(r.path)
       // 组件HTML嵌入到模板中
       const html = renderIndexHTML(appHtml)
       // htlm文件名处理
@@ -104,7 +104,7 @@ async function resolveBuildConfig({
   return {
     mode: 'production',
     root,
-    plugins: await createVitePlugins(config),
+    plugins: await createVitePlugins(config, null, isSSR),
     ssr: {
       // 注意加上这个配置，防止 cjs 产物中 require ESM 的产物，因为 react-router-dom 的产物为 ESM 格式
       noExternal: ['react-router-dom', 'lodash-es'], // 加入编译

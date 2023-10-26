@@ -12,7 +12,6 @@ export default declare((api) => {
   const visitor: Visitor<PluginPass> = {
     // 核心逻辑实现
     JSXOpeningElement(path, state) {
-      console.log(JSON.stringify(path.node, null, 4))
       const { node, scope } = path
       const component = node.name
       // 组件名字，如 <Aside />: Aside; <Side.Aside />: Side;

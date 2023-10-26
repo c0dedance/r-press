@@ -1,6 +1,10 @@
 import type { UserConfig as ViteUserConfig } from 'vite'
 import type { ComponentType } from 'react'
 
+export type PropsWithIsland = {
+  __island?: boolean
+}
+
 export interface PageModule {
   default: ComponentType
   frontmatter?: FrontMatter

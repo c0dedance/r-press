@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import { bindingAsideScroll, scrollToTarget } from '../../utils/asideScroll'
 import { useHeaders } from '../../utils/useHeaders'
-import type { Header } from 'shared/types'
+import type { Header, PropsWithIsland } from 'shared/types'
 
 interface AsideProps {
   headers: Header[]
 }
 
-export function Aside(props: AsideProps) {
+export function Aside(props: AsideProps & PropsWithIsland) {
   const { headers: rawHeaders = [] } = props
   // 是否展示大纲栏
   const { headers } = useHeaders(rawHeaders)

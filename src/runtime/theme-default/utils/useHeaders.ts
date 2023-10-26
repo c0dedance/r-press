@@ -7,7 +7,6 @@ export function useHeaders(initHeaders) {
       import.meta.hot.on(
         'mdx-changed',
         ({ filePath }: { filePath: string }) => {
-          console.log(filePath, 'filePath')
           // 1. 导入最新的模块
           import(/* @vite-ignore */ `${filePath}?import&t=${Date.now()}`).then(
             (module) => {
