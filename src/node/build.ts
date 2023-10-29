@@ -3,12 +3,13 @@ import { pathToFileURL } from 'url'
 import { build as viteBuild } from 'vite'
 import fs from 'fs-extra'
 // import ora from 'ora'
-import { CLIENT_ENTRY_PATH, SERVER_ENTRY_PATH } from './constant'
+import { CLIENT_ENTRY_PATH, MASK_SPLITTER, SERVER_ENTRY_PATH } from './constant'
 import { createVitePlugins } from './vitePlugins'
 import type { InlineConfig } from 'vite'
 import type { RollupOutput } from 'rollup'
 import type { SiteConfig } from 'shared/types'
 import type { Route } from './plugin-routes'
+import type { RenderResult } from 'runtime/ssr-entry'
 
 // const spinner = ora()
 
@@ -30,7 +31,7 @@ export async function renderPage({
   routes,
 }: {
   root: string
-  render: (pagePath: string) => string
+  render: (pagePath: string) => Promise<RenderResult>
   clientBundle: RollupOutput
   routes: Route[]
 }) {
@@ -56,7 +57,11 @@ export async function renderPage({
   await Promise.all(
     routes.map(async (r) => {
       // 渲染路由对应的页面
-      const appHtml = await render(r.path)
+      const { appHtml, islandPathToMap } = await render(r.path)
+
+      // 打包 Islands 组件代码
+      await buildIslands(root, islandPathToMap)
+
       // 组件HTML嵌入到模板中
       const html = renderIndexHTML(appHtml)
       // htlm文件名处理
@@ -74,6 +79,72 @@ export async function renderPage({
 
   // remove .temp
   await fs.remove(path.resolve(root, './.temp'))
+}
+async function buildIslands(
+  root: string,
+  islandPathToMap: RenderResult['islandPathToMap']
+) {
+  /* 拼接的目标代码 
+  import { Aside } from 'some-path'
+  // 全局注册 Islands 组件
+  window.ISLANDS = { Aside }
+  // 注册 Islands 组件的 props 数据
+  window.ISLAND_PROPS = JSON.parse(
+    document.getElementById('island-props').textContent
+  )
+  */
+  const islandsInjectCode = `\
+  ${Object.entries(islandPathToMap)
+    .map(
+      ([islandName, islandPath]) =>
+        `import { ${islandName} } from '${islandPath}';`
+    )
+    .join('\n')}
+
+    window.ISLANDS = { ${Object.keys(islandPathToMap).join(', ')} };
+    window.ISLAND_PROPS = JSON.parse(
+      document.getElementById('island-props').textContent
+    );
+  `
+  const injectId = 'island:inject'
+  return viteBuild({
+    build: {
+      outDir: path.join(root, '.temp'),
+      rollupOptions: {
+        input: injectId,
+      },
+    },
+    plugins: [
+      {
+        name: 'island:inject',
+        enforce: 'post', // 作为兜底的处理逻辑
+        resolveId(id) {
+          // './components/Aside!!ISLAND!!/path/to/src/runtime/theme-default/Layout/DocLayout/index.tsx'
+          if (id.includes(MASK_SPLITTER)) {
+            const [originId, importer] = id.split(MASK_SPLITTER)
+            return this.resolve(originId, importer, { skipSelf: true }) // skipSelf=true表明忽略当前插件，让其他插件处理
+          }
+          if (id === injectId) {
+            return '\0' + id
+          }
+        },
+        // 处理虚拟模块 island:inject
+        load(id) {
+          if (id === '\0' + injectId) {
+            return islandsInjectCode
+          }
+        },
+        // 对于 Islands Bundle，我们只需要 JS 即可，其它资源文件可以删除
+        generateBundle(_, bundle) {
+          for (const name in bundle) {
+            if (bundle[name].type === 'asset') {
+              delete bundle[name]
+            }
+          }
+        },
+      },
+    ],
+  })
 }
 
 export async function bundle(root: string, config: SiteConfig) {

@@ -7,14 +7,22 @@ const originJsxs = jsxRuntime.jsxs
 
 export const data = {
   islandProps: [], // Islands 组件的数据
-  islandToPathMap: {}, // 记录 Island 组件的路径信息 id -> path(importer & import path)
+  islandPathToMap: {}, // 记录 Island 组件的路径信息 id -> path(importer & import path)
 }
+/* 
+IslandData  {
+  islandProps: [ { headers: [Array] } ],
+  islandPathToMap: {
+    Aside: '../../components/Aside!!ISLAND!!/Users/admin/project/r-press/src/runtime/theme-default/Layout/DocLayout/index.tsx'
+  }
+}
+*/
 const internalJsx = (jsx, type, props, ...args) => {
   // 如果发现有 __island 这个 prop，则视为一个 Island 组件，记录下来
   if (props && props.__island) {
     data.islandProps.push(props)
     const id = type.name
-    data.islandToPathMap[id] = props.__island
+    data.islandPathToMap[id] = props.__island
 
     delete props.__island
     // 对 island 组件包裹一层div，并通过 __island 进行标识 Islands 组件的 ID 以及 props 数据在 islandProps 中的位置。
@@ -36,5 +44,5 @@ export const Fragment = jsxRuntime.Fragment //  jsx-runtime 文件中，不能�
 
 export const clearIslandData = () => {
   data.islandProps = []
-  data.islandToPathMap = {}
+  data.islandPathToMap = {}
 }
