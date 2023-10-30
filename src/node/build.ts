@@ -3,7 +3,13 @@ import { pathToFileURL } from 'url'
 import { build as viteBuild } from 'vite'
 import fs from 'fs-extra'
 // import ora from 'ora'
-import { CLIENT_ENTRY_PATH, MASK_SPLITTER, SERVER_ENTRY_PATH } from './constant'
+import {
+  CLIENT_ENTRY_PATH,
+  CLIENT_OUTPUT,
+  MASK_SPLITTER,
+  PUBLIC_DIR,
+  SERVER_ENTRY_PATH,
+} from './constant'
 import { createVitePlugins } from './vitePlugins'
 import type { InlineConfig } from 'vite'
 import type { RollupOutput } from 'rollup'
@@ -12,7 +18,6 @@ import type { Route } from './plugin-routes'
 import type { RenderResult } from 'runtime/ssr-entry'
 
 // const spinner = ora()
-
 export async function build(root: string = process.cwd(), config: SiteConfig) {
   // 1. bundle client 端 + server 端
   const [clientBundle] = await bundle(root, config)
@@ -38,7 +43,14 @@ export async function renderPage({
   const clientChunk = clientBundle.output.find(
     (chunk) => chunk.type === 'chunk' && chunk.isEntry
   )
-  const renderIndexHTML = (appHtml: string) =>
+  const styleAssets = clientBundle.output.filter(
+    (chunk) => chunk.type === 'asset' && chunk.fileName.endsWith('.css')
+  )
+  const renderIndexHTML = (
+    appHtml: string,
+    islandsCode: string,
+    propsData: unknown[]
+  ) =>
     `\
   <!DOCTYPE html>
   <html>
@@ -47,29 +59,35 @@ export async function renderPage({
       <meta name="viewport" content="width=device-width,initial-scale=1">
       <title>title</title>
       <meta name="description" content="xxx">
+         ${styleAssets
+           .map((item) => `<link rel="stylesheet" href="/${item.fileName}">`)
+           .join('\n')}
     </head>
     <body>
       <div id="root">${appHtml}</div>
+      <script type="module">${islandsCode}</script>
       <script type="module" src="/${clientChunk?.fileName}"></script>
+      <script id="island-props">${JSON.stringify(propsData)}</script>
     </body>
   </html>`.trim()
   console.log(`Rendering page in server side...`)
   await Promise.all(
     routes.map(async (r) => {
       // 渲染路由对应的页面
-      const { appHtml, islandPathToMap } = await render(r.path)
+      const { appHtml, islandPathToMap, propsData = [] } = await render(r.path)
 
       // 打包 Islands 组件代码
-      await buildIslands(root, islandPathToMap)
+      const islandBundle = await buildIslands(root, islandPathToMap)
+      const islandsCode = (islandBundle as RollupOutput).output[0].code
 
       // 组件HTML嵌入到模板中
-      const html = renderIndexHTML(appHtml)
+      const html = renderIndexHTML(appHtml, islandsCode, propsData)
       // htlm文件名处理
       const outputFilePath = r.path.endsWith('/')
         ? `${r.path}index.html`
         : `${r.path}.html`
 
-      const outputPath = path.join(root, 'build', outputFilePath)
+      const outputPath = path.join(root, CLIENT_OUTPUT, outputFilePath)
       // ensure build dir
       await fs.ensureDir(path.dirname(outputPath))
       // write html file
@@ -157,6 +175,12 @@ export async function bundle(root: string, config: SiteConfig) {
       // server build
       buildServer(root, config),
     ])
+    // copy publicDir assets
+    const publicDir = path.join(root, PUBLIC_DIR)
+    if (fs.pathExistsSync(publicDir)) {
+      await fs.copy(publicDir, path.join(root, CLIENT_OUTPUT))
+    }
+
     return [clientBundle, serverBundle] as [RollupOutput, RollupOutput]
   } catch (e) {
     console.log(e)
@@ -182,7 +206,7 @@ async function resolveBuildConfig({
     },
     build: {
       ssr: isSSR,
-      outDir: isSSR ? path.join(root, '.temp') : path.join(root, 'build'),
+      outDir: isSSR ? path.join(root, '.temp') : path.join(root, CLIENT_OUTPUT),
       rollupOptions: {
         input: isSSR ? SERVER_ENTRY_PATH : CLIENT_ENTRY_PATH,
         output: {

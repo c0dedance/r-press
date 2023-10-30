@@ -11,6 +11,8 @@ export const CLIENT_ENTRY_PATH = path.resolve(
 
 export const PUBLIC_DIR = 'public'
 
+export const CLIENT_OUTPUT = 'build' // docs下打包的目录
+
 export const SERVER_ENTRY_PATH = path.resolve(
   ROOT,
   './src/runtime/ssr-entry.tsx'

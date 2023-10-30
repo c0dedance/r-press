@@ -21,7 +21,7 @@ const internalJsx = (jsx, type, props, ...args) => {
   // 如果发现有 __island 这个 prop，则视为一个 Island 组件，记录下来
   if (props && props.__island) {
     data.islandProps.push(props)
-    const id = type.name
+    const id = type.name // Aside
     data.islandPathToMap[id] = props.__island
 
     delete props.__island
