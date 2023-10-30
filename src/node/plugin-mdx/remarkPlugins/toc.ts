@@ -19,12 +19,16 @@ export const remarkPluginToc: Plugin<[], Root> = () => {
   return (tree) => {
     // 初始化 toc 数组
     const toc: TocItem[] = []
+    let title = ''
     // 同一个slugger实例具有记忆，重复处理的标题后续的会带上后缀，每次编译时都重新进行实例的初始化
     const slugger = new Slugger()
     // 遍历 tree
     visit(tree, 'heading', (node) => {
-      // debugger
       if (!node.depth || !node.children) return
+      // 收集 h1 作为 doc.title
+      if (node.depth === 1) {
+        title = (node.children[0] as ChildNode).value
+      }
       // 收集 h2~h4 的标题
       if (node.depth > 1 && node.depth < 5) {
         const text = (node.children as ChildNode[])
@@ -58,8 +62,23 @@ export const remarkPluginToc: Plugin<[], Root> = () => {
         estree: parse(insertCode, {
           ecmaVersion: 2020,
           sourceType: 'module',
-        }) as Program,
+        }) as unknown as Program,
       },
     } as MdxjsEsm)
+    // 插入 h1
+    if (title) {
+      const insertedTitle = `export const title = '${title}';`
+
+      tree.children.unshift({
+        type: 'mdxjsEsm',
+        value: insertedTitle,
+        data: {
+          estree: parse(insertedTitle, {
+            ecmaVersion: 2020,
+            sourceType: 'module',
+          }) as unknown as Program,
+        },
+      } as MdxjsEsm)
+    }
   }
 }

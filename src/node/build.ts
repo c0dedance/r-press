@@ -15,6 +15,7 @@ import {
 import { createVitePlugins } from './vitePlugins'
 import type { InlineConfig } from 'vite'
 import type { RollupOutput } from 'rollup'
+import type { HelmetData, HelmetServerState } from 'react-helmet-async'
 import type { SiteConfig } from 'shared/types'
 import type { Route } from './plugin-routes'
 import type { RenderResult } from 'runtime/ssr-entry'
@@ -39,7 +40,7 @@ export async function renderPage({
   routes,
 }: {
   root: string
-  render: (pagePath: string) => Promise<RenderResult>
+  render: (pagePath: string, helmetContext: object) => Promise<RenderResult>
   clientBundle: RollupOutput
   routes: Route[]
 }) {
@@ -52,7 +53,8 @@ export async function renderPage({
   const renderIndexHTML = (
     appHtml: string,
     islandsCode: string,
-    islandProps: unknown[]
+    islandProps: unknown[],
+    helmet: HelmetServerState
   ) =>
     `\
   <!DOCTYPE html>
@@ -60,8 +62,11 @@ export async function renderPage({
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
-      <title>title</title>
-      <meta name="description" content="xxx">
+      ${helmet?.title?.toString() || ''}
+      ${helmet?.meta?.toString() || ''}
+      ${helmet?.link?.toString() || ''}
+      ${helmet?.style?.toString() || ''}
+      <meta name="description" content="none">
       ${styleAssets
         .map((item) => `<link rel="stylesheet" href="/${item.fileName}">`)
         .join('\n')}
@@ -85,19 +90,23 @@ export async function renderPage({
   console.log(`Rendering page in server side...`)
   await Promise.all(
     routes.map(async (r) => {
+      const helmetContext = {
+        context: {},
+      } as HelmetData
       // 渲染路由对应的页面
       const {
         appHtml,
         islandPathToMap,
         islandProps = [],
-      } = await render(r.path)
+      } = await render(r.path, helmetContext.context)
+      const { helmet } = helmetContext.context
 
       // 打包 Islands 组件代码
       const islandBundle = await buildIslands(root, islandPathToMap)
       const islandsCode = (islandBundle as RollupOutput).output[0].code
 
       // 组件HTML嵌入到模板中
-      const html = renderIndexHTML(appHtml, islandsCode, islandProps)
+      const html = renderIndexHTML(appHtml, islandsCode, islandProps, helmet)
       // htlm文件名处理
       const outputFilePath = r.path.endsWith('/')
         ? `${r.path}index.html`

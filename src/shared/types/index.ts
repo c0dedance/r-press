@@ -10,6 +10,7 @@ export interface PageModule {
   frontmatter?: FrontMatter
   toc?: Header[]
   [key: string]: unknown
+  title?: string
 }
 
 // 用户配置的超集
@@ -80,6 +81,7 @@ export interface PageData {
   frontmatter: FrontMatter
   pageType: PageType
   toc?: Header[]
+  title?: string
 }
 
 export interface Feature {
