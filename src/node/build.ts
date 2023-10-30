@@ -6,8 +6,10 @@ import fs from 'fs-extra'
 import {
   CLIENT_ENTRY_PATH,
   CLIENT_OUTPUT,
+  EXTERNALS,
   MASK_SPLITTER,
   PUBLIC_DIR,
+  ROOT,
   SERVER_ENTRY_PATH,
 } from './constant'
 import { createVitePlugins } from './vitePlugins'
@@ -29,6 +31,7 @@ export async function build(root: string = process.cwd(), config: SiteConfig) {
   // 3. 服务端渲染，产出HTML
   await renderPage({ root, render, clientBundle, routes })
 }
+/* 生产HTML */
 export async function renderPage({
   root,
   render,
@@ -59,9 +62,18 @@ export async function renderPage({
       <meta name="viewport" content="width=device-width,initial-scale=1">
       <title>title</title>
       <meta name="description" content="xxx">
-         ${styleAssets
-           .map((item) => `<link rel="stylesheet" href="/${item.fileName}">`)
-           .join('\n')}
+      ${styleAssets
+        .map((item) => `<link rel="stylesheet" href="/${item.fileName}">`)
+        .join('\n')}
+      <script type="importmap">
+      {
+        "imports": {
+          ${EXTERNALS.map(
+            (name) => `"${name}": "/${normalizeVendorFilename(name)}"`
+          ).join(',\n')}
+        }
+      }
+      </script>
     </head>
     <body>
       <div id="root">${appHtml}</div>
@@ -102,6 +114,7 @@ export async function renderPage({
   // remove .temp
   await fs.remove(path.resolve(root, './.temp'))
 }
+/* 打包 islands 组件 */
 async function buildIslands(
   root: string,
   islandPathToMap: RenderResult['islandPathToMap']
@@ -134,6 +147,7 @@ async function buildIslands(
       outDir: path.join(root, '.temp'),
       rollupOptions: {
         input: injectId,
+        external: EXTERNALS,
       },
     },
     plugins: [
@@ -168,7 +182,7 @@ async function buildIslands(
     ],
   })
 }
-
+/* 打包 SSR Client */
 export async function bundle(root: string, config: SiteConfig) {
   // spinner.start('Building client + server bundles...')
   console.log(`Building client + server bundles...`)
@@ -184,6 +198,8 @@ export async function bundle(root: string, config: SiteConfig) {
     if (fs.pathExistsSync(publicDir)) {
       await fs.copy(publicDir, path.join(root, CLIENT_OUTPUT))
     }
+    // 依赖预打包产物复制到 build 目录
+    await fs.copy(path.join(ROOT, 'vendors'), path.join(root, CLIENT_OUTPUT))
 
     return [clientBundle, serverBundle] as [RollupOutput, RollupOutput]
   } catch (e) {
@@ -216,6 +232,7 @@ async function resolveBuildConfig({
         output: {
           format: isSSR ? 'cjs' : 'esm',
         },
+        external: EXTERNALS,
       },
     },
   }
@@ -227,4 +244,8 @@ async function buildClient(root: string, config: SiteConfig) {
 
 async function buildServer(root: string, config: SiteConfig) {
   return viteBuild(await resolveBuildConfig({ isSSR: true, root, config }))
+}
+/* 将文件路径转为下划线分割 */
+function normalizeVendorFilename(fileName: string) {
+  return fileName.replace(/\//g, '_') + '.js'
 }
