@@ -5,7 +5,7 @@ import { DataContext } from './hooks'
 
 export interface RenderResult {
   appHtml: string
-  propsData: unknown[]
+  islandProps: unknown[]
   islandPathToMap: Record<string, string>
 }
 
@@ -15,7 +15,6 @@ export async function render(pagePath: string) {
   const pageData = await initPageData(pagePath)
   // 清除 islands 数据
   const { clearIslandData, data } = await import('./jsx-runtime')
-  const { islandProps, islandPathToMap } = data
   clearIslandData()
 
   const appHtml = renderToString(
@@ -25,6 +24,8 @@ export async function render(pagePath: string) {
       </StaticRouter>
     </DataContext.Provider>
   )
+  // 保证每次都能拿到最新的数据
+  const { islandProps, islandPathToMap } = data
   return {
     appHtml,
     islandProps,

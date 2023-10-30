@@ -49,7 +49,7 @@ export async function renderPage({
   const renderIndexHTML = (
     appHtml: string,
     islandsCode: string,
-    propsData: unknown[]
+    islandProps: unknown[]
   ) =>
     `\
   <!DOCTYPE html>
@@ -67,21 +67,25 @@ export async function renderPage({
       <div id="root">${appHtml}</div>
       <script type="module">${islandsCode}</script>
       <script type="module" src="/${clientChunk?.fileName}"></script>
-      <script id="island-props">${JSON.stringify(propsData)}</script>
+      <script id="island-props">${JSON.stringify(islandProps)}</script>
     </body>
   </html>`.trim()
   console.log(`Rendering page in server side...`)
   await Promise.all(
     routes.map(async (r) => {
       // 渲染路由对应的页面
-      const { appHtml, islandPathToMap, propsData = [] } = await render(r.path)
+      const {
+        appHtml,
+        islandPathToMap,
+        islandProps = [],
+      } = await render(r.path)
 
       // 打包 Islands 组件代码
       const islandBundle = await buildIslands(root, islandPathToMap)
       const islandsCode = (islandBundle as RollupOutput).output[0].code
 
       // 组件HTML嵌入到模板中
-      const html = renderIndexHTML(appHtml, islandsCode, propsData)
+      const html = renderIndexHTML(appHtml, islandsCode, islandProps)
       // htlm文件名处理
       const outputFilePath = r.path.endsWith('/')
         ? `${r.path}index.html`
