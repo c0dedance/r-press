@@ -21,3 +21,11 @@ export const SERVER_ENTRY_PATH = path.resolve(
 export const MD_REGEX = /\.mdx?$/
 
 export const MASK_SPLITTER = '!!ISLAND!!' // ISLAND组件标识的分隔符
+
+// 预打包的依赖
+export const EXTERNALS = [
+  'react',
+  'react-dom',
+  'react-dom/client',
+  'react/jsx-runtime',
+]
