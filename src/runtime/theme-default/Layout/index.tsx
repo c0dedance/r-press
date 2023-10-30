@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async'
 import { Nav } from '../components/Nav'
 import { HomeLayout } from './HomeLayout'
 import { DocLayout } from './DocLayout'
+import { NotFoundLayout } from './NotFoundLayout'
 import { usePageData } from '../../'
 import '../styles/base.css'
 import '../styles/vars.css'
@@ -17,7 +18,7 @@ export function Layout() {
     } else if (pageType === 'doc') {
       return <DocLayout />
     } else {
-      return <div>404 页面</div>
+      return <NotFoundLayout />
     }
   }
   return (

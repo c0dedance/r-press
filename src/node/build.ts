@@ -89,7 +89,12 @@ export async function renderPage({
   </html>`.trim()
   console.log(`Rendering page in server side...`)
   await Promise.all(
-    routes.map(async (r) => {
+    [
+      ...routes,
+      {
+        path: '/404', // 生成 404.html
+      },
+    ].map(async (r) => {
       const helmetContext = {
         context: {},
       } as HelmetData
