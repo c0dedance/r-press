@@ -1,7 +1,10 @@
 {
   "name": "r-press",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "Vite SSG framework based on islands arch",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "tsup --watch",
     "build": "tsup && pnpm build:deps",
@@ -10,6 +13,8 @@
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
     "prepare:e2e": "tsx scripts/prepare-e2e.ts",
+    "release": "tsx ./scripts/release.ts",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "dev:docs": "r-press dev docs",
     "build:docs": "r-press build docs",
     "preview": "r-press preview docs"
@@ -17,6 +22,14 @@
   "bin": {
     "r-press": "bin/r-press.js"
   },
+  "files": [
+    "dist",
+    "bin",
+    "README.md",
+    "src/runtime",
+    "src/theme-default",
+    "src/shared"
+  ],
   "simple-git-hooks": {
     "pre-commit": "npx --no -- lint-staged",
     "commit-msg": "npx --no-install commitlint --edit \"$1\""
@@ -27,6 +40,12 @@
     ]
   },
   "author": "c0dedance",
+  "keywords": [
+    "vite",
+    "ssg",
+    "islands"
+  ],
+  "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "^17.7.2",
     "@commitlint/config-conventional": "^17.7.0",
@@ -40,7 +59,10 @@
     "@types/resolve": "^1.20.4",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
+    "chalk": "^5.3.0",
     "commitlint": "^17.7.2",
+    "conventional-changelog-cli": "^4.1.0",
+    "enquirer": "^2.4.1",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
@@ -48,8 +70,10 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "execa": "5.1.1",
     "lint-staged": "^14.0.1",
+    "minimist": "^1.2.8",
     "prettier": "^3.0.3",
     "sass": "^1.69.4",
+    "semver": "^7.5.4",
     "simple-git-hooks": "^2.9.0",
     "tsup": "^7.2.0",
     "tsx": "^3.13.0",
