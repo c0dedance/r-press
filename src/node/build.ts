@@ -9,7 +9,6 @@ import {
   EXTERNALS,
   MASK_SPLITTER,
   PUBLIC_DIR,
-  ROOT,
   SERVER_ENTRY_PATH,
 } from './constant'
 import { createVitePlugins } from './vitePlugins'
@@ -213,8 +212,10 @@ export async function bundle(root: string, config: SiteConfig) {
       await fs.copy(publicDir, path.join(root, CLIENT_OUTPUT))
     }
     // 依赖预打包产物复制到 build 目录
-    await fs.copy(path.join(ROOT, 'vendors'), path.join(root, CLIENT_OUTPUT))
-
+    const vendorsDir = path.join(process.cwd(), 'vendors')
+    if (fs.pathExistsSync(vendorsDir)) {
+      await fs.copy(vendorsDir, path.join(root, CLIENT_OUTPUT))
+    }
     return [clientBundle, serverBundle] as [RollupOutput, RollupOutput]
   } catch (e) {
     console.log(e)
