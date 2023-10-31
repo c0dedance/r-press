@@ -7,8 +7,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "tsup --watch",
-    "build": "tsup && pnpm build:deps",
-    "build:deps": "tsx ./scripts/prebundle.ts",
+    "build": "tsup && pnpm build:prebundle",
+    "build:prebundle": "tsx ./scripts/prebundle.ts",
     "lint": "eslint --fix --ext .ts,.tsx,.js,.jsx --quiet ./",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
@@ -28,7 +28,8 @@
     "README.md",
     "src/runtime",
     "src/theme-default",
-    "src/shared"
+    "src/shared",
+    "template.html"
   ],
   "simple-git-hooks": {
     "pre-commit": "npx --no -- lint-staged",
