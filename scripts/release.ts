@@ -102,7 +102,12 @@ async function main() {
 
   // 7. 执行 npm publish
   step('\nPublishing packages...')
-  await run('pnpm', ['publish', '--access', 'public']) // –access public 参数则设置包的访问权限为公共。
+  await run('pnpm', [
+    'publish',
+    '--access',
+    'public',
+    '--registry=https://registry.npmjs.org',
+  ]) // –access public 参数则设置包的访问权限为公共。
 
   // 8. git push 并打 tag
   step('\nPushing to GitHub...')
@@ -114,5 +119,8 @@ async function main() {
 main().catch((err) => {
   // 错误兜底处理，回退版本
   console.log(err)
+  console.log(
+    'use this command to login npm: npm login --registry=https://registry.npmjs.org'
+  )
   updateVersion(currentVersion)
 })
