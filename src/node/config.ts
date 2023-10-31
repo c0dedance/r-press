@@ -36,14 +36,14 @@ export async function resolveUserConfig(
   const configPath = getUserConfigPath(root)
   // 2.解析配置文件
   const { config: rawConfig = {} as RawUserConfig, dependencies = [] } =
-    await loadConfigFromFile(
+    (await loadConfigFromFile(
       {
         command,
         mode,
       },
       configPath,
       root
-    )
+    )) || {}
   if (rawConfig) {
     const config =
       typeof rawConfig === 'function' ? await rawConfig() : rawConfig

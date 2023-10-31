@@ -69,25 +69,27 @@ describe('Markdown compile cases', async () => {
     const result = remarkProcessor.processSync(mdContent)
     expect(result.value.toString().replace(mdContent, ''))
       .toMatchInlineSnapshot(`
-        "export const toc = [
-          {
-            \\"id\\": \\"h2-code\\",
-            \\"text\\": \\"h2 code\\",
-            \\"depth\\": 2
-          },
-          {
-            \\"id\\": \\"h3-link\\",
-            \\"text\\": \\"h3 link\\",
-            \\"depth\\": 3
-          },
-          {
-            \\"id\\": \\"h4-你好啊\\",
-            \\"text\\": \\"h4 你好啊\\",
-            \\"depth\\": 4
-          }
-        ]
+      "export const title = 'h1';
 
-        "
-      `)
+      export const toc = [
+        {
+          \\"id\\": \\"h2-code\\",
+          \\"text\\": \\"h2 code\\",
+          \\"depth\\": 2
+        },
+        {
+          \\"id\\": \\"h3-link\\",
+          \\"text\\": \\"h3 link\\",
+          \\"depth\\": 3
+        },
+        {
+          \\"id\\": \\"h4-你好啊\\",
+          \\"text\\": \\"h4 你好啊\\",
+          \\"depth\\": 4
+        }
+      ]
+
+      "
+    `)
   })
 })
