@@ -3,9 +3,7 @@ import fs from 'fs-extra'
 import { build } from 'esbuild'
 import resolve from 'resolve'
 import { normalizePath } from 'vite'
-import { EXTERNALS } from '../src/node/constant'
-
-const PRE_BUNDLE_DIR = 'vendors'
+import { EXTERNALS, PRE_BUNDLE_DIR } from '../src/node/constant'
 
 async function preBundle(deps: string[]) {
   const flattenDepMap = {} as Record<string, string>

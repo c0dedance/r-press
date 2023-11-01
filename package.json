@@ -29,7 +29,8 @@
     "src/runtime",
     "src/theme-default",
     "src/shared",
-    "template.html"
+    "template.html",
+    "vendors"
   ],
   "simple-git-hooks": {
     "pre-commit": "npx --no -- lint-staged",

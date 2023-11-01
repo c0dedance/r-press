@@ -8,7 +8,9 @@ import {
   CLIENT_OUTPUT,
   EXTERNALS,
   MASK_SPLITTER,
+  PRE_BUNDLE_DIR,
   PUBLIC_DIR,
+  ROOT,
   SERVER_ENTRY_PATH,
 } from './constant'
 import { createVitePlugins } from './vitePlugins'
@@ -212,7 +214,7 @@ export async function bundle(root: string, config: SiteConfig) {
       await fs.copy(publicDir, path.join(root, CLIENT_OUTPUT))
     }
     // 依赖预打包产物复制到 build 目录
-    const vendorsDir = path.join(process.cwd(), 'vendors')
+    const vendorsDir = path.join(ROOT, PRE_BUNDLE_DIR)
     if (fs.pathExistsSync(vendorsDir)) {
       await fs.copy(vendorsDir, path.join(root, CLIENT_OUTPUT))
     }
