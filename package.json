@@ -1,6 +1,6 @@
 {
   "name": "r-press",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Vite SSG framework based on islands arch",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

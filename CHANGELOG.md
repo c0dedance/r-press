@@ -1,3 +1,13 @@
+## [0.0.3](https://github.com/c0dedance/r-press/compare/v0.0.2...v0.0.3) (2023-11-01)
+
+
+### Bug Fixes
+
+* release msg ([8a94ac2](https://github.com/c0dedance/r-press/commit/8a94ac2da5ead4caff11ee763b89a3faccfab3cb))
+* 发布带上vendors ([4a251ce](https://github.com/c0dedance/r-press/commit/4a251ce89bc87057fd4949e41aec0701dda63cd0))
+
+
+
 ## 0.0.2 (2023-10-31)
 
 
