@@ -1,3 +1,12 @@
+## [0.0.4](https://github.com/c0dedance/r-press/compare/v0.0.3...v0.0.4) (2023-11-02)
+
+
+### Bug Fixes
+
+* plugin-react 跳过node_modules下的编译导致未标识Island组件 ([56d4079](https://github.com/c0dedance/r-press/commit/56d40792ba989ccbe83c592f95999fde9bdff89a))
+
+
+
 ## [0.0.3](https://github.com/c0dedance/r-press/compare/v0.0.2...v0.0.3) (2023-11-01)
 
 
