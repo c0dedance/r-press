@@ -5,7 +5,7 @@ import { pluginIndexHtml } from './plugin-r-press/indexHtml'
 import { pluginConfig } from './plugin-r-press/config'
 import { pluginRoutes } from './plugin-routes'
 import { createPluginMdx } from './plugin-mdx'
-import babelPluginIsland from './babel-plugin-island'
+import { pluginTransformIslands } from './plugin-island/transform'
 import unocssOptions from './unocssOptions'
 import { ROOT } from './constant'
 
@@ -19,12 +19,13 @@ export async function createVitePlugins(
   return [
     pluginUnocss(unocssOptions),
     pluginIndexHtml(),
+    pluginTransformIslands(),
     pluginReact({
       jsxRuntime: 'automatic',
       jsxImportSource: isSSR ? path.join(ROOT, 'src', 'runtime') : 'react',
-      babel: {
-        plugins: [babelPluginIsland],
-      },
+      // babel: {
+      //   plugins: [babelPluginIsland],
+      // },
     }),
     pluginConfig(config, restartServer),
     pluginRoutes({
