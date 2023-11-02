@@ -26,6 +26,14 @@ export function pluginConfig(
             localsConvention: 'camelCaseOnly',
           },
         },
+        optimizeDeps: {
+          include: [
+            'react-helmet-async',
+            'react-dom',
+            'react-dom/client',
+            'lodash-es',
+          ],
+        },
       }
     },
     configureServer(server) {
