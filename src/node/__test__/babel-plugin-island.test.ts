@@ -15,7 +15,7 @@ describe('babel-plugin-island', () => {
 
   const babelOptions: TransformOptions = {
     filename: IMPORTER_PATH,
-    presets: ['@babel/preset-react'],
+    presets: ['@babel/preset-react', '@babel/preset-typescript'],
     plugins: [babelPluginIsland],
   }
 
@@ -38,6 +38,22 @@ describe('babel-plugin-island', () => {
     import A from '${ISLAND_PATH}'; 
     export default function App() { 
       return <A.B __island />; 
+    }`
+
+    const result = await transformAsync(code, babelOptions)
+
+    expect(result?.code).toContain(
+      `__island: "${ISLAND_PATH}${MASK_SPLITTER}${IMPORTER_PATH}"`
+    )
+  })
+
+  test('Should compile tsx identifier', async () => {
+    // with import type
+    const code = `\
+    import Aside from '${ISLAND_PATH}'; 
+    import type { AsideType } from '${ISLAND_PATH}'; 
+    export default function App() { 
+      return <Aside __island />; 
     }`
 
     const result = await transformAsync(code, babelOptions)
