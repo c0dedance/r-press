@@ -158,6 +158,10 @@ async function buildIslands(
   `
   const injectId = 'island:inject'
   return viteBuild({
+    mode: 'production',
+    esbuild: {
+      jsx: 'automatic',
+    },
     build: {
       outDir: path.join(root, '.temp'),
       rollupOptions: {

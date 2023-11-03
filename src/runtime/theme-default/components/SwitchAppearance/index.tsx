@@ -1,5 +1,7 @@
+import React from 'react'
 import { toggle } from '../../utils/toggleAppearance'
 import styles from './index.module.scss'
+import type { PropsWithIsland } from 'shared/types'
 
 interface SwitchProps {
   onClick?: () => void
@@ -24,7 +26,7 @@ export function Switch(props: SwitchProps) {
   )
 }
 
-export function SwitchAppearance() {
+export const SwitchAppearance: React.FC<PropsWithIsland> = () => {
   return (
     <Switch onClick={toggle}>
       <div className={styles.sun}>
