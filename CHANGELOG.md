@@ -1,3 +1,12 @@
+## [0.0.5](https://github.com/c0dedance/r-press/compare/v0.0.4...v0.0.5) (2023-11-03)
+
+
+### Bug Fixes
+
+* 预构建cjs的间接依赖 ([92a2d89](https://github.com/c0dedance/r-press/commit/92a2d897154f3f604f31d1eb89ac418816b3046c))
+
+
+
 ## [0.0.4](https://github.com/c0dedance/r-press/compare/v0.0.3...v0.0.4) (2023-11-02)
 
 
