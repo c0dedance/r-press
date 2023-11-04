@@ -31,7 +31,7 @@ export function Nav() {
             hover="opacity-60"
             className="w-full h-full text-1rem font-semibold flex items-center"
           >
-            Island.js
+            Rpress
           </a>
         </div>
         <div flex="~">
@@ -51,7 +51,7 @@ export function Nav() {
             ml="2"
             before="menu-item-before"
           >
-            <a href="/">
+            <a href="https://github.com/c0dedance/r-press">
               <div className="i-carbon-logo-github w-5 h-5 fill-current"></div>
             </a>
           </div>

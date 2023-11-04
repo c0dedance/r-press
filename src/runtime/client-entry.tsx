@@ -46,7 +46,7 @@ async function renderInBrowser() {
       // Aside:0
       const [id, index] = island.getAttribute('__island').split(':')
       const Element = window.ISLANDS[id] as ComponentType<unknown>
-      // 单独对每个 island 组件 Hydrate，多次 hydrateRoot 不会像 createRoot 会产生多个 React ·实例
+      // 单独对每个 island 组件 Hydrate，多次 hydrateRoot 不会像 createRoot 会产生多个 React 实例
       hydrateRoot(island, <Element {...window.ISLAND_PROPS[index]} />)
     }
   }
