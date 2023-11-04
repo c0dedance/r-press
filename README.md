@@ -21,29 +21,30 @@ $ pnpm i r-press
 
 ## Usage 🚀
 
+### 手动安装
+
 1. 创建并进入一个新目录
 
-     ~~~bash
+   ```bash
    $ mkdir rpress-docs && cd rpress-docs
-   ~~~
-
+   ```
 
 2. 使用包管理器进行初始化
 
-     ```bash
+   ```bash
    $ pnpm init
    ```
 
 3. 安装依赖
 
-     ```bash
+   ```bash
    $ pnpm i r-press
    ```
 
-
 4. 创建你的第一篇文档
-	  ```bash
-    $ mkdir docs && echo '# Hello Rpress' > docs/index.md
+   ```bash
+   $ mkdir docs && echo '# Hello Rpress' > docs/index.md
+   ```
 5. 在 `package.json` 中添加一些`scripts`
 
    这一步骤是可选的，推荐你完成它。在下文中，我们会默认这些 scripts 已经被添加。
@@ -51,8 +52,9 @@ $ pnpm i r-press
    ```json
    {
      "scripts": {
-       "docs:dev": "r-press dev docs",
-       "docs:build": "r-press build docs"
+       "dev": "r-press dev docs",
+       "build": "r-press build docs",
+       "preview": "r-press preview docs"
      }
    }
    ```
@@ -61,16 +63,25 @@ $ pnpm i r-press
 
    ```bash
    $ pnpm docs:dev
-   
-   $ pnpm docs:build
+
+   $ pnpm docs:build && pnpm preview
+   ```
+
+### 使用 create-press 脚手架
+
+敬请期待...
 
 ## Documentation 📚
 
-To check out docs, visit [docs](https://docs.qkeep.cn).
+To check out docs, visit [docs](https://Rpress.qkeep.cn).
 
 ## Changelog 📝
 
 Detailed changes for each release are documented in the [CHANGELOG](https://github.com/c0dedance/r-press/blob/master/CHANGELOG.md).
+
+## Credits 🎉
+
+Inspired by [island.js](https://github.com/sanyuan0704/island.js). Respect!
 
 ## License 📄
 

@@ -1,0 +1,26 @@
+# 静态资源处理
+
+## 公共资源
+
+在开发环境中，你可以把你的静态资源放在 `public` 目录中，Rpress 将自动在 `public` 目录寻找资源。在生产环境中，
+Rpress 会将 `public` 目录中的所有文件复制到产物目录（`build`）。
+
+比如:
+
+```bash
+docs
+├── public
+│   └── logo.png
+```
+
+在生产环境构建后，Rpress 将会在 `build` 目录下生成 `logo.png` 文件：
+
+```bash
+docs
+├── public
+│   └── logo.png
+├── build
+│   └── logo.png
+│   └── index.html
+│   └── ...
+```

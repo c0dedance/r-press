@@ -1,4 +1,4 @@
-import { defineConfig } from '../dist'
+import { defineConfig } from 'r-press'
 
 export default defineConfig({
   title: 'RPress',
@@ -6,7 +6,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: "主页", link: "/" },
-      { text: "指南", link: "/guide/" },
+      { text: "指南", link: "/guide/getting-started" },
     ],
     sidebar: {
       '/guide/': [
@@ -15,18 +15,44 @@ export default defineConfig({
           items: [
             {
               text: '快速开始',
-              link: '/guide/start'
-            },
-            {
-              text: '用法',
-              link: '/guide/usage'
+              link: '/guide/getting-started'
             },
             {
               text: '配置站点',
               link: '/guide/configure-site'
             }
           ]
-        }
+        },
+        {
+          text: '架构',
+          items: [
+            {
+              text: 'SPA 和 MPA 对比',
+              link: '/guide/spa-vs-mpa'
+            },
+            {
+              text: '孤岛架构',
+              link: '/guide/islands-arch'
+            }
+          ]
+        },
+        {
+          text: '基础功能',
+          items: [
+            {
+              text: '约定式路由',
+              link: '/guide/conventional-route'
+            },
+            {
+              text: '使用 MDX 语法',
+              link: '/guide/use-mdx'
+            },
+            {
+              text: '静态资源',
+              link: '/guide/static-assets'
+            },
+          ]
+        },
       ]
     }
   },
