@@ -62,9 +62,9 @@ $ pnpm i r-press
 6. 在本地启动服务器 or 打包
 
    ```bash
-   $ pnpm docs:dev
+   $ pnpm dev
 
-   $ pnpm docs:build && pnpm preview
+   $ pnpm build && pnpm preview
    ```
 
 ### 使用 create-press 脚手架
