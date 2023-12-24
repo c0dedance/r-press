@@ -56,4 +56,12 @@ export default defineConfig({
       ]
     }
   },
+  aiConfig: {
+    // root: '.',
+    include: ['./**/*.{md,mdx}'],
+    server: {
+      ask: '/ask',
+      upload: '/upload',
+    },
+  }
 })
