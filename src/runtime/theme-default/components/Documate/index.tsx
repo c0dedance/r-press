@@ -1,13 +1,7 @@
-// import { DocumateDialog as Dialog } from './dialog'
-// import { Button } from './button'
-
-// export { Dialog, Button as Documate }
-// export default Button
 import React, { useState } from 'react'
 import { DocumateDialog as Dialog } from './dialog'
 import styles from './index.module.scss'
-// import { Dialog } from '@documate/react'
-// import '@documate/react/dist/style.css'
+import type { PropsWithIsland } from 'shared/types'
 
 export const Documate: React.FC<{ endpoint: string } & PropsWithIsland> = (
   props
