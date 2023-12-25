@@ -2,6 +2,7 @@ import path from 'path'
 import { cac } from 'cac'
 import { build } from './build'
 import { preview } from './preview'
+import { upload } from './upload'
 import { version } from '../../package.json'
 import { resolveConfig } from './config'
 
@@ -41,6 +42,28 @@ cli
     try {
       root = path.resolve(root)
       await preview(root, { port })
+    } catch (e) {
+      console.log(e)
+    }
+  })
+
+cli
+  .command(
+    'upload [root]',
+    'upload docs to backend and generate the knowledge base.'
+  )
+  // .option('-t, --token <token>', 'access token')
+  // .option('-b, --backend <backend>', 'upload url')
+  // .option('-i, --include <include>', 'include docs')
+  // .option('-e, --exclude <exclude>', 'exclude docs')
+  .action(async (root: string) => {
+    try {
+      root = path.resolve(root)
+      const config = await resolveConfig(root, 'build', 'production')
+      await upload({
+        root,
+        ...config.siteData.aiConfig,
+      })
     } catch (e) {
       console.log(e)
     }
