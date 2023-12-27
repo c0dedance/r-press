@@ -1,4 +1,5 @@
 import { defineConfig } from 'r-press'
+import { name } from '../package.json'
 
 export default defineConfig({
   title: 'RPress',
@@ -57,6 +58,7 @@ export default defineConfig({
     }
   },
   aiConfig: {
+    project: name,
     // root: '.',
     include: ['./**/*.{md,mdx}'],
     server: {

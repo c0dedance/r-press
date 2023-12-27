@@ -1,7 +1,7 @@
 import path from 'path'
 import fs from 'fs-extra'
 import { loadConfigFromFile } from 'vite'
-import type { SiteConfig, UserConfig } from '../shared/types'
+import type { SiteConfig, UserConfig, AiConfig } from '../shared/types'
 
 type RawUserConfig =
   | UserConfig
@@ -58,7 +58,7 @@ export function resolveSiteData(userConfig: UserConfig): UserConfig {
     description: userConfig.description || 'SSG Framework',
     themeConfig: userConfig.themeConfig || {},
     vite: userConfig.vite || {},
-    aiConfig: userConfig.aiConfig || {},
+    aiConfig: userConfig.aiConfig || ({} as AiConfig),
   }
 }
 

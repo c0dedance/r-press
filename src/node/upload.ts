@@ -6,29 +6,54 @@ import axios from 'axios'
 
 import type { AiConfig } from 'shared/types'
 
+interface UploadConfig extends AiConfig {
+  accessToken: string
+}
+
+const http = axios.create()
+
+const initAxios = (accessToken: string, project: string) => {
+  // 配置默认的Authorization header
+  http.defaults.headers.common['Authorization'] = accessToken
+  // 添加请求拦截器
+  http.interceptors.request.use((config) => {
+    if (config.method === 'post') {
+      config.data = {
+        ...config.data,
+        project, // 添加默认参数
+      }
+    }
+    return config
+  })
+}
+
 const handleError = (spinnies, name, error) => {
   let message = ''
-  if (error && error.response && error.response.data) {
+  if (error?.response?.data) {
     message = error.response.data.error
   } else {
     message = error.message
   }
-  spinnies.fail(name, { text: `Failed: ${message}`, successColor: 'redBright' })
-  return
+  spinnies.fail(`${name} failed: ${message}`)
 }
 
 const uploadFiles = async (uploadUrl, files) => {
+  if (!files.length) {
+    return ora('No files to upload.').fail()
+  }
+
   const uploadSpinner = ora({
     text: `Uploading files: 0/${files.length}`,
     color: 'blue',
   }).start()
+
   try {
     let uploadedFilesNum = 0
 
     for (const file of files) {
       uploadSpinner.text = `Uploading files: ${uploadedFilesNum}/${files.length} ${file.fileName}`
-
-      await axios.post(uploadUrl, {
+      // add auth header
+      await http.post(uploadUrl, {
         operation: 'add',
         path: file.fileName,
         content: file.content,
@@ -48,7 +73,7 @@ const uploadFiles = async (uploadUrl, files) => {
   }).start()
 
   try {
-    await axios.post(uploadUrl, {
+    await http.post(uploadUrl, {
       operation: 'generate',
     })
     genSpinner.succeed('Knowledge base generated.')
@@ -71,7 +96,7 @@ const readFilesByFileNames = async (rootPath, fileNames) => {
   return results
 }
 
-const getFilesContents = async (config: AiConfig) => {
+const getFilesContents = async (config: UploadConfig) => {
   let ignore = []
   if (config.exclude) {
     ignore = Array.isArray(config.exclude) ? config.exclude : [config.exclude]
@@ -86,12 +111,21 @@ const getFilesContents = async (config: AiConfig) => {
 
   return files
 }
-export async function upload(config: AiConfig) {
+export async function upload(config: UploadConfig) {
   console.log('Start uploading files to backend.\n')
-  const uploadUrl = config.server.upload
-  if (!uploadUrl) {
-    throw new Error('The parameter `server.upload` is required.')
+  const { accessToken, server, project } = config
+  const uploadUrl = server.upload
+
+  if (!uploadUrl || !project) {
+    throw new Error(
+      `The parameter ${!uploadUrl ? 'server.upload' : 'project'} is required.`
+    )
   }
+  if (!accessToken) {
+    // TODO: 快速初始化accessToken
+    throw new Error('access token not found')
+  }
+  initAxios(accessToken, project)
 
   const filesContents = await getFilesContents(config)
   await uploadFiles(uploadUrl, filesContents)

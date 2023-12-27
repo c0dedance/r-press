@@ -1,4 +1,5 @@
 import path from 'path'
+import { loadEnv } from 'vite'
 import { cac } from 'cac'
 import { build } from './build'
 import { preview } from './preview'
@@ -60,8 +61,15 @@ cli
     try {
       root = path.resolve(root)
       const config = await resolveConfig(root, 'build', 'production')
+      // load env
+      const { VITE_ACCESS_TOKEN: accessToken } = loadEnv(
+        'production',
+        process.cwd()
+      )
+
       await upload({
         root,
+        accessToken,
         ...config.siteData.aiConfig,
       })
     } catch (e) {

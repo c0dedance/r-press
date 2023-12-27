@@ -112,9 +112,10 @@ interface AiServer {
 }
 
 export interface AiConfig {
+  project: string // project name
   root?: string // rootDir
   include?: string[] // include docs
   exclude?: string[] // exclude docs
-  server?: AiServer
+  server: AiServer
   // token: string // access token
 }
