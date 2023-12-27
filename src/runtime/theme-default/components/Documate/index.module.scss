@@ -1,0 +1,31 @@
+.documate-button {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  transition: border-color 0.25s ease-in-out;
+  cursor: pointer;
+
+  background: linear-gradient(to right, #43CBFF, #9708CC);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  .icon {
+    height: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .documate-button {
+    font-size: var(--dm-button-font-size);
+    color: var(--dm-color-hint);
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    // background: var(--dm-color-bg-alt);
+
+    .icon {
+      height: var(--dm-button-font-size);
+      margin-right: 0.2rem;
+    }
+  }
+}

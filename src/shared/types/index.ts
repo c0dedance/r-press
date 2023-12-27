@@ -26,6 +26,7 @@ export interface UserConfig {
   description?: string
   themeConfig?: ThemeConfig
   vite?: ViteUserConfig
+  aiConfig?: AiConfig
 }
 
 // 主题配置：导航栏 侧边栏
@@ -103,4 +104,18 @@ export interface Hero {
     link: string
     theme: 'brand' | 'alt'
   }[]
+}
+
+interface AiServer {
+  ask: string // ask url
+  upload: string // upload url
+}
+
+export interface AiConfig {
+  project: string // project name
+  root?: string // rootDir
+  include?: string[] // include docs
+  exclude?: string[] // exclude docs
+  server: AiServer
+  // token: string // access token
 }
