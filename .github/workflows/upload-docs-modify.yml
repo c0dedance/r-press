@@ -1,0 +1,35 @@
+# 当 docs 目录有改动，自动执行npm run upload
+name: upload-docs-modify
+
+on:
+  push:
+    branches:
+      - master
+      - docs
+      - feat/*
+    paths:
+      - docs/**
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    env:
+      ACCESS_TOKEN: ${{ vars.ACCESS_TOKEN }}
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.4.0
+
+      - name: Set node version to 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: "pnpm"
+
+      - name: Install deps
+        run: pnpm install
+
+      - name: Upload docs
+        run: pnpm upload
