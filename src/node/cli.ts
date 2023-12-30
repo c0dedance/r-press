@@ -61,11 +61,9 @@ cli
     try {
       root = path.resolve(root)
       const config = await resolveConfig(root, 'build', 'production')
-      // load env
-      const { VITE_ACCESS_TOKEN: accessToken } = loadEnv(
-        'production',
-        process.cwd()
-      )
+      // load env 支持.env文件、环境变量
+      const { VITE_ACCESS_TOKEN: accessToken = process.env.ACCESS_TOKEN } =
+        loadEnv('production', process.cwd())
 
       await upload({
         root,
