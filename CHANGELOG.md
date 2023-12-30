@@ -1,3 +1,17 @@
+## [0.0.7](https://github.com/c0dedance/r-press/compare/v0.0.6...v0.0.7) (2023-12-30)
+
+### Bug Fixes
+
+- add type import ([6b790df](https://github.com/c0dedance/r-press/commit/6b790dfdcbd0b4bd46205421e6e125166804b625))
+
+### Features
+
+- add GPT server ([3a87ea5](https://github.com/c0dedance/r-press/commit/3a87ea53138eb847a4a662fd284ab075bb07d8d0))
+- add upload cmd ([86596ea](https://github.com/c0dedance/r-press/commit/86596eaddc6621a37da73a7cfa9222cf47b8b049))
+- upload鉴权 ([2032517](https://github.com/c0dedance/r-press/commit/20325173eb6f9edf5563c129e018173841bfbdc3))
+- 新增GPT对话组件&配置 ([06369e9](https://github.com/c0dedance/r-press/commit/06369e9cd046d05f7e9e6eae75859ccea385f44a))
+- 环境变量加载ACCESS_TOKEN ([bdafd40](https://github.com/c0dedance/r-press/commit/bdafd407d7c7e89182dfedc72c16297b9a8379c4))
+
 ## [0.0.6](https://github.com/c0dedance/r-press/compare/v0.0.5...v0.0.6) (2023-11-04)
 
 ### Bug Fixes
