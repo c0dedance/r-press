@@ -62,8 +62,8 @@ export default defineConfig({
     // root: '.',
     include: ['./**/*.{md,mdx}'],
     server: {
-      ask: '/ask',
-      upload: '/upload',
+      ask: 'https://dkb2jv5y9f.us.aircode.run/ask',
+      upload: 'https://dkb2jv5y9f.us.aircode.run/upload',
     },
   }
 })
